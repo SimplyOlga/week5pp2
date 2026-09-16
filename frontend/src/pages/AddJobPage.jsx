@@ -13,8 +13,35 @@ const AddJobPage = () => {
 
   const navigate = useNavigate();
 
+  const job = {
+      title: title,
+      location: location,
+      type: type,
+      description: description,
+      salary: salary,
+      company: {
+      name: companyName,
+      contactEmail: contactEmail,
+      contactPhone: contactPhone,
+      },
+    }
+  
+  const addJob = async () => {
+    const res = await fetch("/api/jobs/", {
+      method: 'POST',
+      body: JSON.stringify(job),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const json = await res.json();
+    console.log("New job added", json)
+  }
+
   const submitForm = (e) => {
     e.preventDefault();
+    addJob()
     console.log("AddJobPage");
   };
 

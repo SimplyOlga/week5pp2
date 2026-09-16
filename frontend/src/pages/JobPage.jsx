@@ -6,9 +6,22 @@ const JobPage = () => {
   const [job, setJob] = useState(null);
   const navigate = useNavigate();
 
-  const deleteJob = async () => {
-    console.log(JobPage);
-  };
+  const deleteJob = async (id) => {
+      try {
+      const response = await fetch(`/api/jobs/${id}`, {
+      method: "DELETE",
+    });
+      if (!response.ok) {
+        throw new Error("Failed to delete the job");
+      }
+
+      console.log("Job deleted successfully"); 
+
+    } catch (error) {
+    console.error("Error deleting job:", error.message);
+  }
+};
+
 
 
   useEffect(() => {
@@ -23,7 +36,16 @@ const JobPage = () => {
   if (!job) {
     return <div>Loading...</div>;
   }
-  
+
+
+  const onDeleteJob = () => {
+    const confirm = window.confirm("Are you sure you want to delete this job?");
+    if (!confirm) return;
+    deleteJob(id);
+    navigate("/");
+  };
+
+
   return (
     <div className="job-details">
       <h2>{job.title}</h2>
@@ -38,10 +60,10 @@ const JobPage = () => {
       <Link to={`/edit-job/${id}`}>
         <button>Edit Job</button>
       </Link>
-      <button onClick={deleteJob}>Delete Job</button>
+      <button onClick={onDeleteJob}>Delete Job</button>
     </div>
-  );
+  ); 
 };
 
-export default JobPage;
+export default JobPage; 
 

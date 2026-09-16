@@ -1,0 +1,7 @@
+Iteration 8:
+
+1. To make a _id for the json file (in addition to id). A "rule" for mongoose how to store and render the json.\
+
+2. To allow multiple requests at once, like frontend getting stuff from the API and vice versa. WIthout cors we can not send requests from front- to backend, and fetch from the api
+
+3. to shorten requests from localhost/blip/blop to just "blip/blop"

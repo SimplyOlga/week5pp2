@@ -90,9 +90,10 @@ const deleteJob = async (req, res) => {
 };
 
 // Get jobs by type
-getJobsByType = async (req, res) => {
+const getJobsByType = async (req, res) => {
   try {
-    const jobs = await Job.find({ type: req.params.type });
+    const type = req.params.type;
+    const jobs = await Job.find({ type });
     res.status(200).json(jobs);
   } catch (error) {
     res.status(500).json({ message: error.message });

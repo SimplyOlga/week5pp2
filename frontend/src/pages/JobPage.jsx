@@ -13,14 +13,17 @@ const JobPage = () => {
 
   useEffect(() => {
     const fetchJob = async() => {
-      const res = await fetch(`/api/jobs/`)
-    }
+      const res = await fetch(`/api/jobs/${id}`)
+      const data = await res.json();
+      setJob(data)
+      
+    }; fetchJob();
   })
 
   if (!job) {
     return <div>Loading...</div>;
   }
-
+  
   return (
     <div className="job-details">
       <h2>{job.title}</h2>

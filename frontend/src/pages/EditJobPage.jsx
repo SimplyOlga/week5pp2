@@ -14,6 +14,19 @@ const EditJobPage = () => {
   const [location, setLocation] = useState("");
   const [salary, setSalary] = useState("");
 
+  const updatedJob = {
+      title: title,
+      location: location,
+      type: type,
+      description: description,
+      salary: salary,
+      company: {
+      name: companyName,
+      contactEmail: contactEmail,
+      contactPhone: contactPhone,
+      },
+    }
+
   useEffect(() => {
     const fetchJob = async () => {
       try {
@@ -42,8 +55,32 @@ const EditJobPage = () => {
     fetchJob();
   }, [id]);
 
+  const editJob = async (id) => {
+    try {
+      const response = await fetch(`/api/jobs/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(updatedJob),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+      if (!response.ok) {
+        throw new Error("Failed to update the job");
+      }
+      const json = await response.json()
+
+      console.log("Job updated successfully", json); 
+
+    } catch (error) {
+    console.error("Error update job:", error.message);
+  }
+  }
+
   const submitForm = (e) => {
     e.preventDefault();
+    editJob(id)
+    navigate("/")
     console.log("EditJobPage");
   };
 
